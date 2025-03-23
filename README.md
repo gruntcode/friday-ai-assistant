@@ -1,7 +1,7 @@
 # Friday AI Assistant
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/gruntcode/friday-ai-assistant/main/static/images/friday-banner.png" alt="Friday AI Assistant" width="800">
+  <img src="https://raw.githubusercontent.com/gruntcode/friday-ai-assistant/main/static/images/friday-avatar.png" alt="Friday AI Assistant" width="800">
 </div>
 
 A modern web application featuring an AI assistant named "Friday" with a futuristic UI and voice capabilities.
