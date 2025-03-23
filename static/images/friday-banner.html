@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Friday AI Banner</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .banner {
+            width: 1200px;
+            height: 300px;
+            background: linear-gradient(135deg, #121212 0%, #1e1e1e 100%);
+            border-radius: 12px;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,229,255,0.3) 0%, rgba(0,229,255,0) 70%);
+            filter: blur(20px);
+            animation: pulse 4s infinite ease-in-out;
+        }
+        .glow-1 {
+            top: -100px;
+            left: 200px;
+        }
+        .glow-2 {
+            bottom: -150px;
+            right: 300px;
+        }
+        .content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            z-index: 2;
+            padding: 0 50px;
+        }
+        .logo {
+            width: 150px;
+            height: 150px;
+            background-color: #00e5ff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 40px;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.7);
+        }
+        .robot {
+            font-size: 80px;
+        }
+        .text {
+            flex: 1;
+        }
+        h1 {
+            font-family: 'Arial', sans-serif;
+            font-size: 72px;
+            color: #ffffff;
+            margin: 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+        .friday {
+            color: #00e5ff;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.7);
+        }
+        p {
+            font-family: 'Arial', sans-serif;
+            font-size: 24px;
+            color: #b0b0b0;
+            margin: 10px 0 0 0;
+        }
+        .grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 1;
+        }
+        @keyframes pulse {
+            0% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <div class="grid"></div>
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="content">
+            <div class="logo">
+                <div class="robot">🤖</div>
+            </div>
+            <div class="text">
+                <h1>Meet <span class="friday">FRIDAY</span></h1>
+                <p>Your AI Assistant with Voice Capabilities</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
