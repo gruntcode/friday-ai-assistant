@@ -195,7 +195,7 @@ def chat():
     # Validate model selection
     valid_models = [
         "llama-3.1-8b-instant",
-        "deepseek-r1-distill-llama-70b",
+        "openai/gpt-oss-20b",
         "llama-3.2-11b-vision-preview",
         "llama-3.3-70b-versatile"
     ]
@@ -301,7 +301,7 @@ def get_models():
     """Return available models for the dropdown."""
     models = [
         {"id": "llama-3.1-8b-instant", "name": "Llama 3.1 8B Instant"},
-        {"id": "deepseek-r1-distill-llama-70b", "name": "DeepSeek R1 Distill Llama 70B"},
+        {"id": "openai/gpt-oss-20b", "name": "OpenAI GPT OSS 20B"},
         {"id": "llama-3.2-11b-vision-preview", "name": "Llama 3.2 11B Vision Preview"},
         {"id": "llama-3.3-70b-versatile", "name": "Llama 3.3 70B Versatile"}
     ]
