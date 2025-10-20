@@ -1,7 +1,7 @@
 # Friday AI Assistant
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/gruntcode/friday-ai-assistant/main/static/images/friday-avatar.png" alt="Friday AI Assistant" >
+  <img src="https://raw.githubusercontent.com/gruntcode/friday-ai-assistant/master/static/images/friday-avatar-modern.svg" alt="Friday AI Assistant" width="200">
 </div>
 
 A modern web application featuring an AI assistant named "Friday" with a futuristic UI and voice capabilities.
@@ -18,7 +18,7 @@ A modern web application featuring an AI assistant named "Friday" with a futuris
 ## Available Models
 
 - Llama 3.1 8B Instant - Fast, efficient model for quick responses
-- DeepSeek R1 Distill Llama 70B - Powerful distilled model with strong capabilities
+- OpenAI GPT OSS 20B - Open-source GPT model with strong capabilities
 - Llama 3.2 11B Vision Preview - Model with vision capabilities
 - Llama 3.3 70B Versatile - Highest quality large model for complex tasks
 
