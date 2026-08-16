@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let pdfEnabled = false;
     let voiceEnabled = false;
     let useCache = true;
-    let selectedModel = "llama-3.1-8b-instant";
+    let selectedModel = "openai/gpt-oss-20b";
     let chats = JSON.parse(localStorage.getItem('friday_chats') || '[]');
 
     // Initialize SpeechRecognition
@@ -194,11 +194,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     const option = document.createElement('option');
                     option.value = model.id;
                     option.text = model.name;
-                    option.title = model.description;
+                    if (model.description) option.title = model.description;
                     modelSelect.appendChild(option);
                 });
 
-                // Set default model
+                // Select the default, but never leave the dropdown on a model the
+                // server no longer offers -- fall back to the first available one.
+                const available = models.some(m => m.id === selectedModel);
+                if (!available && models.length > 0) {
+                    selectedModel = models[0].id;
+                }
                 modelSelect.value = selectedModel;
             })
             .catch(error => {

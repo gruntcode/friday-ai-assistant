@@ -35,13 +35,16 @@ if not GROQ_API_KEY:
     print("Warning: GROQ_API_KEY not found in environment variables. Please set it up.")
 
 if not OPENAI_API_KEY:
-    print("Warning: OPENAI_API_KEY not found in environment variables. Please set it up.")
+    print(
+        "Warning: OPENAI_API_KEY not found in environment variables. "
+        "Text-to-speech will be unavailable; everything else works."
+    )
 
-# Initialize Groq client
-groq_client = groq.Groq(api_key=GROQ_API_KEY)
-
-# Initialize OpenAI client
-openai_client = openai.OpenAI(api_key=OPENAI_API_KEY)
+# Both clients are only constructed when their key exists. The OpenAI SDK raises on
+# construction with a missing key, which would take the whole app down at import time
+# even though OpenAI is only used for optional text-to-speech.
+groq_client = groq.Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
+openai_client = openai.OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
 
 # Configure Groq client
 client = None
@@ -60,6 +63,28 @@ os.makedirs(cache_dir, exist_ok=True)
 # Create audio directory if it doesn't exist
 audio_dir = os.path.join(app.static_folder, 'audio')
 os.makedirs(audio_dir, exist_ok=True)
+
+# Model configuration.
+#
+# Defined in one place so the dropdown, the request validator, the default and the
+# API-key check can never drift apart. Groq retires models periodically -- when that
+# happens, edit this list only. Current IDs verified against Groq's live models API;
+# see https://console.groq.com/docs/deprecations for the retirement schedule.
+AVAILABLE_MODELS = [
+    {
+        "id": "openai/gpt-oss-20b",
+        "name": "GPT-OSS 20B (Fast)",
+        "description": "Quick responses for everyday chat. 131k context window.",
+    },
+    {
+        "id": "openai/gpt-oss-120b",
+        "name": "GPT-OSS 120B (Highest quality)",
+        "description": "Stronger reasoning for complex questions. 131k context window.",
+    },
+]
+
+# Default for new sessions and the fallback when a client sends an unknown model.
+DEFAULT_MODEL = os.getenv("GROQ_MODEL", AVAILABLE_MODELS[0]["id"])
 
 # Simple in-memory cache with TTL
 response_cache = {}
@@ -152,7 +177,7 @@ def setup():
         # Simple test request
         test_client.chat.completions.create(
             messages=[{"role": "user", "content": "Hello"}],
-            model="llama-3.1-8b-instant",
+            model=DEFAULT_MODEL,
             max_tokens=10,
         )
         
@@ -188,20 +213,15 @@ def chat():
     messages = data.get('messages', [])
     generate_pdf = data.get('generate_pdf', False)
     web_search = data.get('web_search', False)
-    selected_model = data.get('model', "llama-3.1-8b-instant")
+    selected_model = data.get('model', DEFAULT_MODEL)
     use_cache = data.get('use_cache', True)  # Allow client to disable cache
     generate_voice = data.get('generate_voice', False)
     
     # Validate model selection
-    valid_models = [
-        "llama-3.1-8b-instant",
-        "openai/gpt-oss-20b",
-        "llama-3.2-11b-vision-preview",
-        "llama-3.3-70b-versatile"
-    ]
+    valid_models = [m["id"] for m in AVAILABLE_MODELS]
     
     if selected_model not in valid_models:
-        selected_model = "llama-3.1-8b-instant"  # Default fallback
+        selected_model = DEFAULT_MODEL  # Default fallback
     
     # If web search is requested, perform search and add results to context
     web_search_results = ""
@@ -299,13 +319,7 @@ def chat():
 @app.route('/api/models', methods=['GET'])
 def get_models():
     """Return available models for the dropdown."""
-    models = [
-        {"id": "llama-3.1-8b-instant", "name": "Llama 3.1 8B Instant"},
-        {"id": "openai/gpt-oss-20b", "name": "OpenAI GPT OSS 20B"},
-        {"id": "llama-3.2-11b-vision-preview", "name": "Llama 3.2 11B Vision Preview"},
-        {"id": "llama-3.3-70b-versatile", "name": "Llama 3.3 70B Versatile"}
-    ]
-    return jsonify(models)
+    return jsonify(AVAILABLE_MODELS)
 
 def perform_web_search(query):
     """Perform a basic web search and return the results."""
