@@ -1,128 +1,404 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Friday AI Banner</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #121212;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .banner {
-            width: 1200px;
-            height: 300px;
-            background: linear-gradient(135deg, #121212 0%, #1e1e1e 100%);
-            border-radius: 12px;
-            display: flex;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-        .glow {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0,229,255,0.3) 0%, rgba(0,229,255,0) 70%);
-            filter: blur(20px);
-            animation: pulse 4s infinite ease-in-out;
-        }
-        .glow-1 {
-            top: -100px;
-            left: 200px;
-        }
-        .glow-2 {
-            bottom: -150px;
-            right: 300px;
-        }
-        .content {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            z-index: 2;
-            padding: 0 50px;
-        }
-        .logo {
-            width: 150px;
-            height: 150px;
-            background-color: #00e5ff;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 40px;
-            box-shadow: 0 0 30px rgba(0, 229, 255, 0.7);
-        }
-        .robot {
-            font-size: 80px;
-        }
-        .text {
-            flex: 1;
-        }
-        h1 {
-            font-family: 'Arial', sans-serif;
-            font-size: 72px;
-            color: #ffffff;
-            margin: 0;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 800;
-        }
-        .friday {
-            color: #00e5ff;
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.7);
-        }
-        p {
-            font-family: 'Arial', sans-serif;
-            font-size: 24px;
-            color: #b0b0b0;
-            margin: 10px 0 0 0;
-        }
-        .grid {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-            z-index: 1;
-        }
-        @keyframes pulse {
-            0% {
-                opacity: 0.5;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.8;
-                transform: scale(1.2);
-            }
-            100% {
-                opacity: 0.5;
-                transform: scale(1);
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<title>Friday AI Assistant — README banner source</title>
+<!--
+  Source for static/images/friday-banner.png.
+
+  Render with:
+    node scripts/render-banner.js
+
+  Palette is taken from static/css/style.css so the banner and the app stay in
+  sync: --bg-primary #121212, --accent-primary #00e5ff, --accent-secondary #00b8d4.
+-->
+<style>
+  :root {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --accent: #00e5ff;
+    --accent-deep: #00b8d4;
+    --text: #ffffff;
+    --text-dim: #8b98a5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 1200px;
+    height: 420px;
+    background: #000;
+    overflow: hidden;
+  }
+
+  .banner {
+    position: relative;
+    width: 1200px;
+    height: 420px;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 140% at 18% 50%, #16263a 0%, #101722 42%, var(--bg-primary) 78%);
+    font-family: "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- ambient depth ------------------------------------------------ */
+
+  .grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 229, 255, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 229, 255, 0.055) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(90% 100% at 22% 50%, #000 15%, transparent 72%);
+    -webkit-mask-image: radial-gradient(90% 100% at 22% 50%, #000 15%, transparent 72%);
+  }
+
+  .glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+  }
+  .glow-main {
+    width: 620px; height: 620px;
+    top: -110px; left: -80px;
+    background: radial-gradient(circle, rgba(0, 229, 255, 0.30) 0%, rgba(0, 229, 255, 0) 68%);
+  }
+  .glow-warm {
+    width: 460px; height: 460px;
+    bottom: -220px; right: 60px;
+    background: radial-gradient(circle, rgba(0, 145, 234, 0.22) 0%, rgba(0, 145, 234, 0) 70%);
+  }
+
+  /* Fine horizontal scanlines, very low contrast — reads as "display" */
+  .scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.022) 0px,
+      rgba(255, 255, 255, 0.022) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  }
+
+  /* Hairline top edge, brightest under the glow */
+  .top-edge {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+      rgba(0, 229, 255, 0) 0%,
+      rgba(0, 229, 255, 0.85) 22%,
+      rgba(0, 229, 255, 0.15) 55%,
+      rgba(0, 229, 255, 0) 100%);
+  }
+
+  /* --- layout ------------------------------------------------------- */
+
+  .stage {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    padding: 0 76px;
+  }
+
+  .orb-wrap {
+    position: relative;
+    flex: 0 0 236px;
+    height: 236px;
+  }
+
+  .copy { position: relative; padding-top: 6px; }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .eyebrow-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px 2px rgba(0, 229, 255, 0.9);
+  }
+  .eyebrow-text {
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.92;
+  }
+
+  .wordmark {
+    font-size: 104px;
+    font-weight: 700;
+    letter-spacing: 0.075em;
+    line-height: 0.92;
+    background: linear-gradient(178deg, #ffffff 4%, #d6f7ff 38%, var(--accent) 96%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 34px rgba(0, 229, 255, 0.34));
+  }
+
+  .tagline {
+    margin-top: 16px;
+    font-size: 19px;
+    font-weight: 400;
+    letter-spacing: 0.015em;
+    color: #c8d4de;
+  }
+  .tagline b { color: var(--text); font-weight: 600; }
+
+  .rule {
+    margin: 24px 0 20px;
+    width: 132px; height: 2px;
+    background: linear-gradient(90deg, var(--accent), rgba(0, 229, 255, 0));
+  }
+
+  .chips { display: flex; gap: 9px; }
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px 7px 11px;
+    border: 1px solid rgba(0, 229, 255, 0.32);
+    border-radius: 999px;
+    background: rgba(0, 229, 255, 0.055);
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+    color: #d3e6ee;
+  }
+  .chip svg { display: block; }
+
+  /* --- corner HUD brackets ------------------------------------------ */
+
+  .bracket {
+    position: absolute;
+    width: 26px; height: 26px;
+    border-color: rgba(0, 229, 255, 0.42);
+    border-style: solid;
+    border-width: 0;
+  }
+  .bracket.tl { top: 22px; left: 22px; border-top-width: 2px; border-left-width: 2px; }
+  .bracket.tr { top: 22px; right: 22px; border-top-width: 2px; border-right-width: 2px; }
+  .bracket.bl { bottom: 22px; left: 22px; border-bottom-width: 2px; border-left-width: 2px; }
+  .bracket.br { bottom: 22px; right: 22px; border-bottom-width: 2px; border-right-width: 2px; }
+
+  /* Large arc motif bleeding off the right edge — balances the left-weighted
+     composition without adding anything that needs maintaining. */
+  .right-arcs {
+    position: absolute;
+    top: 50%; right: -230px;
+    transform: translateY(-50%);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  /* Signal bars climbing the right side, echoing the orb's waveform */
+  .signal {
+    position: absolute;
+    right: 118px; bottom: 132px;
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 62px;
+    opacity: 0.5;
+  }
+  .signal i {
+    display: block;
+    width: 3px;
+    border-radius: 2px;
+    background: linear-gradient(to top, rgba(0, 229, 255, 0.08), var(--accent));
+  }
+
+  .footnote {
+    position: absolute;
+    right: 42px; bottom: 34px;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+    color: #5d6b78;
+  }
+  .footnote span { color: var(--accent-deep); }
+</style>
 </head>
 <body>
-    <div class="banner">
-        <div class="grid"></div>
-        <div class="glow glow-1"></div>
-        <div class="glow glow-2"></div>
-        <div class="content">
-            <div class="logo">
-                <div class="robot">🤖</div>
-            </div>
-            <div class="text">
-                <h1>Meet <span class="friday">FRIDAY</span></h1>
-                <p>Your AI Assistant with Voice Capabilities</p>
-            </div>
-        </div>
+<div class="banner">
+  <div class="grid"></div>
+  <div class="glow glow-main"></div>
+  <div class="glow glow-warm"></div>
+  <div class="scanlines"></div>
+  <div class="top-edge"></div>
+
+  <div class="bracket tl"></div>
+  <div class="bracket tr"></div>
+  <div class="bracket bl"></div>
+  <div class="bracket br"></div>
+
+  <div class="stage">
+    <!-- Orb: concentric HUD rings around a geometric AI face, echoing
+         friday-avatar-modern.svg so the banner and avatar read as one system. -->
+    <div class="orb-wrap">
+      <svg width="236" height="236" viewBox="0 0 236 236" fill="none">
+        <defs>
+          <linearGradient id="faceFill" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#1b2536"/>
+            <stop offset="100%" stop-color="#0d1420"/>
+          </linearGradient>
+          <linearGradient id="eyeFill" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#8df3ff"/>
+            <stop offset="100%" stop-color="#00b8d4"/>
+          </linearGradient>
+          <linearGradient id="ringFade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="#00e5ff" stop-opacity="0.12"/>
+          </linearGradient>
+          <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="4.2"/>
+          </filter>
+        </defs>
+
+        <!-- outer arc segments -->
+        <g stroke="url(#ringFade)" stroke-linecap="round" fill="none">
+          <path d="M118 6 A112 112 0 0 1 216 62" stroke-width="2.4"/>
+          <path d="M20 62 A112 112 0 0 1 118 6" stroke-width="2.4" opacity="0.55"/>
+          <path d="M228 140 A112 112 0 0 1 160 224" stroke-width="2.4" opacity="0.8"/>
+          <path d="M76 224 A112 112 0 0 1 8 140" stroke-width="2.4" opacity="0.45"/>
+        </g>
+
+        <!-- tick marks -->
+        <g stroke="#00e5ff" stroke-width="2" opacity="0.65">
+          <line x1="118" y1="20" x2="118" y2="32"/>
+          <line x1="118" y1="204" x2="118" y2="216"/>
+          <line x1="20" y1="118" x2="32" y2="118"/>
+          <line x1="204" y1="118" x2="216" y2="118"/>
+        </g>
+
+        <!-- mid ring -->
+        <circle cx="118" cy="118" r="93" stroke="#00e5ff" stroke-opacity="0.22" stroke-width="1.4"/>
+        <circle cx="118" cy="118" r="93" stroke="#00e5ff" stroke-opacity="0.5" stroke-width="1.4"
+                stroke-dasharray="5 13" />
+
+        <!-- glow behind the face -->
+        <circle cx="118" cy="118" r="74" fill="#00e5ff" opacity="0.16" filter="url(#soft)"/>
+
+        <!-- face plate -->
+        <circle cx="118" cy="118" r="74" fill="url(#faceFill)"
+                stroke="#00e5ff" stroke-opacity="0.5" stroke-width="1.6"/>
+
+        <!-- circuit traces on the plate -->
+        <g stroke="#00e5ff" stroke-opacity="0.42" stroke-width="1.6" fill="none">
+          <path d="M74 84 H92 V74"/>
+          <path d="M162 84 H144 V74"/>
+          <path d="M74 152 H92 V162"/>
+          <path d="M162 152 H144 V162"/>
+        </g>
+        <g fill="#00e5ff" fill-opacity="0.7">
+          <circle cx="92" cy="72" r="2.6"/>
+          <circle cx="144" cy="72" r="2.6"/>
+          <circle cx="92" cy="164" r="2.6"/>
+          <circle cx="144" cy="164" r="2.6"/>
+        </g>
+
+        <!-- eyes -->
+        <g filter="url(#soft)" opacity="0.85">
+          <rect x="90" y="106" width="24" height="9" rx="4.5" fill="#00e5ff"/>
+          <rect x="122" y="106" width="24" height="9" rx="4.5" fill="#00e5ff"/>
+        </g>
+        <rect x="90" y="106" width="24" height="9" rx="4.5" fill="url(#eyeFill)"/>
+        <rect x="122" y="106" width="24" height="9" rx="4.5" fill="url(#eyeFill)"/>
+
+        <!-- voice waveform as the "mouth" -->
+        <g stroke="#00e5ff" stroke-width="3" stroke-linecap="round" opacity="0.92">
+          <line x1="96"  y1="140" x2="96"  y2="148"/>
+          <line x1="104" y1="134" x2="104" y2="154"/>
+          <line x1="112" y1="129" x2="112" y2="159"/>
+          <line x1="120" y1="136" x2="120" y2="152"/>
+          <line x1="128" y1="131" x2="128" y2="157"/>
+          <line x1="136" y1="137" x2="136" y2="151"/>
+          <line x1="144" y1="141" x2="144" y2="147"/>
+        </g>
+      </svg>
     </div>
+
+    <div class="copy">
+      <div class="eyebrow">
+        <div class="eyebrow-dot"></div>
+        <div class="eyebrow-text">AI Assistant · Always On</div>
+      </div>
+
+      <div class="wordmark">FRIDAY</div>
+
+      <div class="tagline">Your <b>AI assistant</b> — voice in, voice out, answers fast.</div>
+
+      <div class="rule"></div>
+
+      <div class="chips">
+        <div class="chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2.2" stroke-linecap="round">
+            <path d="M12 2v11"/><path d="M8 6a4 4 0 0 0 8 0"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v4"/>
+          </svg>
+          Voice
+        </div>
+        <div class="chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2.2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/>
+          </svg>
+          Web Search
+        </div>
+        <div class="chip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2.2" stroke-linecap="round">
+            <path d="M6 2h8l5 5v15H6z"/><path d="M14 2v6h5"/>
+          </svg>
+          PDF Export
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <svg class="right-arcs" width="520" height="520" viewBox="0 0 520 520" fill="none">
+    <defs>
+      <linearGradient id="arcFade" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.55"/>
+        <stop offset="55%" stop-color="#00e5ff" stop-opacity="0.16"/>
+        <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <g stroke="url(#arcFade)" fill="none" stroke-linecap="round">
+      <circle cx="260" cy="260" r="248" stroke-width="1.3"/>
+      <circle cx="260" cy="260" r="205" stroke-width="1.3" stroke-dasharray="3 11"/>
+      <circle cx="260" cy="260" r="162" stroke-width="1.3"/>
+      <path d="M260 22 A238 238 0 0 1 498 260" stroke-width="2.6"/>
+      <path d="M124 452 A238 238 0 0 1 34 300" stroke-width="2.2"/>
+    </g>
+  </svg>
+
+  <div class="signal">
+    <i style="height: 22%"></i>
+    <i style="height: 48%"></i>
+    <i style="height: 84%"></i>
+    <i style="height: 36%"></i>
+    <i style="height: 66%"></i>
+    <i style="height: 100%"></i>
+    <i style="height: 42%"></i>
+    <i style="height: 74%"></i>
+    <i style="height: 28%"></i>
+    <i style="height: 56%"></i>
+  </div>
+
+  <div class="footnote">Powered by <span>Groq</span></div>
+</div>
 </body>
 </html>

@@ -1,8 +1,15 @@
-# Friday AI Assistant
-
 <div align="center">
-  <img src="https://raw.githubusercontent.com/gruntcode/friday-ai-assistant/master/static/images/friday-avatar-modern.svg" alt="Friday AI Assistant" width="200">
+  <img src="static/images/friday-banner.png" alt="Friday AI Assistant" width="100%">
+
+  <p>
+    <img src="https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white" alt="Python 3.9+">
+    <img src="https://img.shields.io/badge/Flask-web%20app-000000?logo=flask&logoColor=white" alt="Flask">
+    <img src="https://img.shields.io/badge/Powered%20by-Groq-00E5FF" alt="Powered by Groq">
+    <img src="https://img.shields.io/badge/Voice-Web%20Speech%20%2B%20TTS-00B8D4" alt="Voice enabled">
+  </p>
 </div>
+
+# Friday AI Assistant
 
 A modern web application featuring an AI assistant named "Friday" with a futuristic UI and voice capabilities.
 
@@ -17,10 +24,21 @@ A modern web application featuring an AI assistant named "Friday" with a futuris
 
 ## Available Models
 
-- Llama 3.1 8B Instant - Fast, efficient model for quick responses
-- OpenAI GPT OSS 20B - Open-source GPT model with strong capabilities
-- Llama 3.2 11B Vision Preview - Model with vision capabilities
-- Llama 3.3 70B Versatile - Highest quality large model for complex tasks
+| Model | ID | Best for |
+|-------|----|----------|
+| GPT-OSS 20B | `openai/gpt-oss-20b` | Fast, efficient responses for everyday chat (default) |
+| GPT-OSS 120B | `openai/gpt-oss-120b` | Stronger reasoning for complex questions |
+
+Both are Groq production-tier models with a 131k context window.
+
+Set `GROQ_MODEL` in your `.env` to change the default. To add or remove models, edit
+`AVAILABLE_MODELS` in [`app.py`](app.py) — the dropdown, the request validator and the
+default all read from that one list.
+
+> **Note on older models:** earlier versions offered Llama 3.1 8B Instant, Llama 3.2 11B
+> Vision Preview and Llama 3.3 70B Versatile. Groq retired all three, so they were
+> replaced. Check [Groq's deprecation schedule](https://console.groq.com/docs/deprecations)
+> before pinning a model.
 
 ## Setup
 
@@ -41,8 +59,16 @@ A modern web application featuring an AI assistant named "Friday" with a futuris
 
    ```bash
    GROQ_API_KEY=your_groq_api_key_here
+
+   # Optional — only needed for text-to-speech. Everything else works without it.
    OPENAI_API_KEY=your_openai_api_key_here
+
+   # Optional — overrides the default model
+   GROQ_MODEL=openai/gpt-oss-20b
    ```
+
+   Only `GROQ_API_KEY` is required. Without `OPENAI_API_KEY` the app runs normally
+   and the spoken-reply feature is simply unavailable.
 
 4. Run the application:
 
@@ -61,7 +87,7 @@ A modern web application featuring an AI assistant named "Friday" with a futuris
 3. Create a new API key
 4. Copy the key and add it to your `.env` file
 
-### OpenAI API Key (for TTS functionality)
+### OpenAI API Key (optional — text-to-speech only)
 
 1. Sign up for an account at [OpenAI Platform](https://platform.openai.com/)
 2. Navigate to the API Keys section
@@ -85,12 +111,26 @@ A modern web application featuring an AI assistant named "Friday" with a futuris
 - `static/` - CSS, JavaScript, and static assets
 - `static/audio/` - Directory for storing generated voice responses
 - `static/downloads/` - Directory for storing generated PDFs
+- `static/images/friday-banner.html` - Source for the README banner
+- `scripts/render-banner.js` - Renders that source to `friday-banner.png`
+
+### Regenerating the banner
+
+The banner at the top of this README is committed as a PNG, but generated from HTML so
+it stays editable. Edit `static/images/friday-banner.html`, then:
+
+```bash
+npm install --no-save playwright
+node scripts/render-banner.js
+```
+
+It renders at 2x (2400x840) for crisp display on retina screens.
 
 ## Requirements
 
 - Python 3.8+
 - Groq API key
-- OpenAI API key (for TTS functionality)
+- OpenAI API key — optional, text-to-speech only
 - Modern web browser with JavaScript enabled
 
 ## License
